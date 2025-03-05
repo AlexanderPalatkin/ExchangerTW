@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ExchangerTW</string>
+
+    // Errors
+    <string name="network_error">Ошибка сети</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="updating_data_error">Ошибка обновления данных</string>
 </resources>
