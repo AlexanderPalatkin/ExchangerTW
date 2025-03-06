@@ -9,5 +9,5 @@ import io.reactivex.rxjava3.core.Single
 interface RatesRepository {
     fun getLatestRates(): Single<ResultState<List<Currency>, ErrorType>>
 
-    fun updateCurrencyAmount(code: String, newAmount: Double): Completable
+    fun updateCurrencyAmount(code: String, newAmount: Double, isSell: Boolean): Completable
 }

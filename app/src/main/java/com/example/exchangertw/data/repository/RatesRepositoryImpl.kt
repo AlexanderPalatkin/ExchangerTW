@@ -1,8 +1,8 @@
 package com.example.exchangertw.data.repository
 
-import com.example.exchangertw.data.remote.api.RatesApiService
 import com.example.exchangertw.data.local.dao.CurrencyDao
 import com.example.exchangertw.data.local.model.CurrencyEntity
+import com.example.exchangertw.data.remote.api.RatesApiService
 import com.example.exchangertw.domain.model.Currency
 import com.example.exchangertw.domain.model.CurrencyCode
 import com.example.exchangertw.domain.model.ErrorType
@@ -21,12 +21,14 @@ class RatesRepositoryImpl @Inject constructor(
     override fun getLatestRates(): Single<ResultState<List<Currency>, ErrorType>> {
         return apiService.getLatestRates()
             .flatMap { response ->
-
                 currencyDao.getAllCurrencies().firstOrError()
                     .flatMap { savedCurrencies ->
 
-                        val updatedCurrencies = response.rates.map { (code, rate) ->
+                        val filteredRates = response.rates.filter { (code, _) ->
+                            CurrencyCode.entries.any { it.name == code }
+                        }
 
+                        val updatedCurrencies = filteredRates.map { (code, rate) ->
                             val savedCurrency = savedCurrencies.find { it.code == code }
                             CurrencyEntity(
                                 code = code,
@@ -59,10 +61,18 @@ class RatesRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun updateCurrencyAmount(code: String, newAmount: Double): Completable {
+    override fun updateCurrencyAmount(
+        code: String,
+        newAmount: Double,
+        isSell: Boolean
+    ): Completable {
         return currencyDao.getCurrencyByCode(code)
             .flatMapCompletable { currency ->
-                currency.amount = newAmount
+                if (isSell) {
+                    currency.amount -= newAmount
+                } else {
+                    currency.amount += newAmount
+                }
                 currencyDao.insertOrUpdateCurrency(currency)
             }
     }

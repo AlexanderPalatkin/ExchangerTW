@@ -15,7 +15,7 @@ class ExchangeUseCase @Inject constructor(
         return repository.getLatestRates()
     }
 
-    operator fun invoke(code: String, newAmount: Double): Completable {
-        return repository.updateCurrencyAmount(code, newAmount)
+    operator fun invoke(code: String, newAmount: Double, isSell: Boolean): Completable {
+        return repository.updateCurrencyAmount(code, newAmount, isSell)
     }
 }

@@ -2,8 +2,27 @@
     <string name="app_name">ExchangerTW</string>
 
     // Errors
+    <string name="error">Ошибка</string>
     <string name="network_error">Ошибка сети</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="updating_data_error">Ошибка обновления данных</string>
+    <string name="have_no_money">Недостаточно средств для продажи</string>
+
+
+    // Currency
+    <string name="sign_dollar">$</string>
+    <string name="sign_euro">€</string>
+    <string name="sign_pound">£</string>
+
+    <string name="currency_amount_info">You have:</string>
+    <string name="double_zero">0.00</string>
+    <string name="one">1</string>
+    <string name="equals">=</string>
+    <string name="ok">ОК</string>
+    <string name="successful">Успешно</string>
+
+    <string name="sell">Sell</string>
+    <string name="buy">Buy</string>
+
 </resources>

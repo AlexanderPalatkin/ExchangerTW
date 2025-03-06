@@ -1,5 +1,6 @@
 package com.example.exchangertw.presentation.exchanger.view_model
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,22 +21,31 @@ import javax.inject.Inject
 class ExchangerViewModel @Inject constructor(
     private val exchangeUseCase: ExchangeUseCase,
     private val stringResourceProvider: StringResourceProvider
-): ViewModel(){
+) : ViewModel() {
 
     private val _state = MutableLiveData<ExchangerState>(ExchangerState.Start)
     val state: LiveData<ExchangerState> get() = _state
 
-    private val disposable = CompositeDisposable()
+    private val _sellText = MutableLiveData<String>()
+    val sellText: LiveData<String> = _sellText
 
-    init {
-        loadCurrencies()
+    private val _buyText = MutableLiveData<String>()
+    val buyText: LiveData<String> = _buyText
+
+    fun updateSellText(text: String) {
+        _sellText.value = text
     }
 
-    private fun loadCurrencies() {
+    fun updateBuyText(text: String) {
+        _buyText.value = text
+    }
+
+    private val disposable = CompositeDisposable()
+
+    fun loadCurrencies() {
         disposable.add(
             Observable.interval(0, 30, TimeUnit.SECONDS)
                 .flatMapSingle {
-                    // Устанавливаем состояние Loading перед каждым запросом
                     _state.postValue(ExchangerState.Loading)
                     exchangeUseCase()
                 }
@@ -46,6 +56,7 @@ class ExchangerViewModel @Inject constructor(
                         is ResultState.Success -> {
                             _state.value = ExchangerState.Data(resultState.data)
                         }
+
                         is ResultState.Error -> {
                             val errorMessage = when (resultState.error) {
                                 ErrorType.NETWORK_ERROR -> stringResourceProvider.getNetworkError()
@@ -62,17 +73,33 @@ class ExchangerViewModel @Inject constructor(
         )
     }
 
-    fun updateCurrencyAmount(code: String, newAmount: Double) {
+    @SuppressLint("CheckResult")
+    fun updateCurrencyAmount(
+        sellCode: String,
+        buyCode: String,
+        sellAmount: Double,
+        buyAmount: Double
+    ) {
         disposable.add(
-            exchangeUseCase(code, newAmount)
+            exchangeUseCase(sellCode, sellAmount, true) // isSell = true
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     loadCurrencies()
                 }, {
-                    _state.value = ExchangerState.Error(stringResourceProvider.getUpdatingDataError())
+                    _state.value =
+                        ExchangerState.Error(stringResourceProvider.getUpdatingDataError())
                 })
         )
+
+        exchangeUseCase(buyCode, buyAmount, false)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                loadCurrencies()
+            }, {
+                _state.value = ExchangerState.Error(stringResourceProvider.getUpdatingDataError())
+            })
     }
 
     override fun onCleared() {

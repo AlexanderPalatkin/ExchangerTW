@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:backgroundTint="@color/material_dynamic_neutral95"
+    app:cardCornerRadius="12dp"
+    app:strokeColor="@color/black"
+    app:strokeWidth="1dp">
+
+    <TextView
+        android:id="@+id/tvCardInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="4dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Sell" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvCurrencyCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:maxWidth="100dp"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="EUR" />
+
+        <TextView
+            android:id="@+id/tvCurrencyAmountInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_amount_info"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCurrencyCode" />
+
+        <TextView
+            android:id="@+id/tvCurrencyAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCurrencyAmountInfo"
+            app:layout_constraintStart_toEndOf="@id/tvCurrencyAmountInfo"
+            app:layout_constraintTop_toTopOf="@id/tvCurrencyAmountInfo"
+            tools:text="100.0" />
+
+        <TextView
+            android:id="@+id/tvCurrencyAmountIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCurrencyAmountInfo"
+            app:layout_constraintStart_toEndOf="@id/tvCurrencyAmount"
+            app:layout_constraintTop_toTopOf="@id/tvCurrencyAmountInfo"
+            tools:text="$" />
+
+        <EditText
+            android:id="@+id/etAmountBuyOrSell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:gravity="end"
+            android:hint="@string/double_zero"
+            android:inputType="numberDecimal"
+            android:maxWidth="200dp"
+            android:textColor="@color/black"
+            android:textSize="42sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCurrencyCode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCurrencyCode" />
+
+        <TextView
+            android:id="@+id/tvCurrentExchangeRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvCurrentExchangeRateIcon"
+            app:layout_constraintTop_toBottomOf="@id/etAmountBuyOrSell"
+            tools:text="1.0" />
+
+        <TextView
+            android:id="@+id/tvCurrentExchangeRateIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvCurrencyComparison"
+            app:layout_constraintTop_toBottomOf="@id/etAmountBuyOrSell"
+            tools:text="$" />
+
+        <TextView
+            android:id="@+id/tvCurrencyComparison"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/equals"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvAnotherCurrency"
+            app:layout_constraintTop_toBottomOf="@id/etAmountBuyOrSell" />
+
+        <TextView
+            android:id="@+id/tvAnotherCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvAnotherCurrencyIcon"
+            app:layout_constraintTop_toBottomOf="@id/etAmountBuyOrSell"
+            tools:text="1.11" />
+
+        <TextView
+            android:id="@+id/tvAnotherCurrencyIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etAmountBuyOrSell"
+            tools:text="$" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
